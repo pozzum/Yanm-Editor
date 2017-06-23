@@ -1,0 +1,11 @@
+c:\users\pozzum\documents\visual studio 2015\Projects\Animation Editor\Animation Editor\bin\Debug\Animation Editor.exe.config
+C:\Users\Pozzum\documents\visual studio 2015\Projects\Animation Editor\Animation Editor\bin\Debug\Animation Editor.exe
+C:\Users\Pozzum\documents\visual studio 2015\Projects\Animation Editor\Animation Editor\bin\Debug\Animation Editor.pdb
+C:\Users\Pozzum\documents\visual studio 2015\Projects\Animation Editor\Animation Editor\bin\Debug\Animation Editor.xml
+C:\Users\Pozzum\documents\visual studio 2015\Projects\Animation Editor\Animation Editor\obj\Debug\Animation Editor.vbprojResolveAssemblyReference.cache
+C:\Users\Pozzum\documents\visual studio 2015\Projects\Animation Editor\Animation Editor\obj\Debug\Animation_Editor.Main.resources
+C:\Users\Pozzum\documents\visual studio 2015\Projects\Animation Editor\Animation Editor\obj\Debug\Animation_Editor.Resources.resources
+C:\Users\Pozzum\documents\visual studio 2015\Projects\Animation Editor\Animation Editor\obj\Debug\Animation Editor.vbproj.GenerateResource.Cache
+C:\Users\Pozzum\documents\visual studio 2015\Projects\Animation Editor\Animation Editor\obj\Debug\Animation Editor.exe
+C:\Users\Pozzum\documents\visual studio 2015\Projects\Animation Editor\Animation Editor\obj\Debug\Animation Editor.xml
+C:\Users\Pozzum\documents\visual studio 2015\Projects\Animation Editor\Animation Editor\obj\Debug\Animation Editor.pdb
