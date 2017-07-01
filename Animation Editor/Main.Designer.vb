@@ -31,6 +31,10 @@ Partial Class Main
         Me.OpenYanmDialog = New System.Windows.Forms.OpenFileDialog()
         Me.But_ExtAll = New System.Windows.Forms.Button()
         Me.FolderBrowserDialog1 = New System.Windows.Forms.FolderBrowserDialog()
+        Me.But_Add = New System.Windows.Forms.Button()
+        Me.But_Rem = New System.Windows.Forms.Button()
+        Me.But_Ren = New System.Windows.Forms.Button()
+        Me.Text_Name = New System.Windows.Forms.TextBox()
         Me.SuspendLayout()
         '
         'But_Open
@@ -63,7 +67,7 @@ Partial Class Main
         'List_Parts
         '
         Me.List_Parts.FormattingEnabled = True
-        Me.List_Parts.Location = New System.Drawing.Point(13, 43)
+        Me.List_Parts.Location = New System.Drawing.Point(13, 72)
         Me.List_Parts.Name = "List_Parts"
         Me.List_Parts.Size = New System.Drawing.Size(275, 186)
         Me.List_Parts.TabIndex = 3
@@ -93,11 +97,51 @@ Partial Class Main
         Me.But_ExtAll.Text = "Extract All"
         Me.But_ExtAll.UseVisualStyleBackColor = True
         '
+        'But_Add
+        '
+        Me.But_Add.Location = New System.Drawing.Point(13, 43)
+        Me.But_Add.Name = "But_Add"
+        Me.But_Add.Size = New System.Drawing.Size(65, 23)
+        Me.But_Add.TabIndex = 5
+        Me.But_Add.Text = "Add"
+        Me.But_Add.UseVisualStyleBackColor = True
+        Me.But_Add.Visible = False
+        '
+        'But_Rem
+        '
+        Me.But_Rem.Location = New System.Drawing.Point(85, 43)
+        Me.But_Rem.Name = "But_Rem"
+        Me.But_Rem.Size = New System.Drawing.Size(63, 23)
+        Me.But_Rem.TabIndex = 6
+        Me.But_Rem.Text = "Remove"
+        Me.But_Rem.UseVisualStyleBackColor = True
+        '
+        'But_Ren
+        '
+        Me.But_Ren.Location = New System.Drawing.Point(154, 43)
+        Me.But_Ren.Name = "But_Ren"
+        Me.But_Ren.Size = New System.Drawing.Size(64, 23)
+        Me.But_Ren.TabIndex = 7
+        Me.But_Ren.Text = "Rename"
+        Me.But_Ren.UseVisualStyleBackColor = True
+        '
+        'Text_Name
+        '
+        Me.Text_Name.Location = New System.Drawing.Point(223, 45)
+        Me.Text_Name.MaxLength = 8
+        Me.Text_Name.Name = "Text_Name"
+        Me.Text_Name.Size = New System.Drawing.Size(63, 20)
+        Me.Text_Name.TabIndex = 8
+        '
         'Main
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(294, 241)
+        Me.ClientSize = New System.Drawing.Size(294, 271)
+        Me.Controls.Add(Me.Text_Name)
+        Me.Controls.Add(Me.But_Ren)
+        Me.Controls.Add(Me.But_Rem)
+        Me.Controls.Add(Me.But_Add)
         Me.Controls.Add(Me.But_ExtAll)
         Me.Controls.Add(Me.List_Parts)
         Me.Controls.Add(Me.But_Inject)
@@ -110,6 +154,7 @@ Partial Class Main
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Animation Editor"
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
 
@@ -122,4 +167,8 @@ Partial Class Main
     Friend WithEvents OpenYanmDialog As OpenFileDialog
     Friend WithEvents But_ExtAll As Button
     Friend WithEvents FolderBrowserDialog1 As FolderBrowserDialog
+    Friend WithEvents But_Add As Button
+    Friend WithEvents But_Rem As Button
+    Friend WithEvents But_Ren As Button
+    Friend WithEvents Text_Name As TextBox
 End Class

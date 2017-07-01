@@ -2,10 +2,12 @@
 Imports System
 Imports System.Globalization
 Imports System.Object
+Imports System.Text
 Public Class Main
     Dim active_file As String
     Dim header As Byte()
     Dim Individual_Parts(20) As Part_Class
+    Dim NumCharacters As String = "0123456789"
     Private Sub But_Open_Click(sender As Object, e As EventArgs) Handles But_Open.Click
         ResetForm()
         If OpenFileDialog1.ShowDialog = System.Windows.Forms.DialogResult.OK Then
@@ -16,8 +18,10 @@ Public Class Main
             End If
         End If
     End Sub
-    Private Sub ResetForm()
-        active_file = ""
+    Private Sub ResetForm(Optional keepfile As Boolean = False)
+        If keepfile = False Then
+            active_file = ""
+        End If
         header = New Byte() {}
         List_Parts.Items.Clear()
         For i As Integer = 0 To 20
@@ -158,10 +162,12 @@ Public Class Main
     End Sub
 
     Private Sub But_ExtAll_Click(sender As Object, e As EventArgs) Handles But_ExtAll.Click
+        FolderBrowserDialog1.SelectedPath = Path.GetDirectoryName(active_file)
         If FolderBrowserDialog1.ShowDialog = DialogResult.OK Then
             For Each AnimPart As String In List_Parts.Items
                 Extract_Yanm(FolderBrowserDialog1.SelectedPath & "\" & AnimPart & ".yanm", AnimPart)
             Next
+            MessageBox.Show("Mass Extract Finished")
         End If
     End Sub
 
@@ -171,6 +177,96 @@ Public Class Main
             My.Computer.FileSystem.WriteAllBytes(SavePath, Individual_Parts(tempindex).Animation_File, False)
         Else
             MessageBox.Show("Error Finding Part " & AnimPart)
+        End If
+    End Sub
+
+    Private Sub Main_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+    End Sub
+
+    Private Sub But_Rem_Click(sender As Object, e As EventArgs) Handles But_Rem.Click
+        If List_Parts.SelectedIndex <> -1 Then
+            File.Copy(active_file, active_file & ".bak", True)
+            Dim Total_Array As Byte() = File.ReadAllBytes(active_file)
+            Dim Temp_Index As Integer = GetPartByString(List_Parts.SelectedItem)
+            Dim Length_Diff As Integer = Individual_Parts(Temp_Index).length
+            'MessageBox.Show(Length_Diff.ToString)
+            Dim YANM_Length As Integer = BitConverter.ToInt32({Total_Array(7), Total_Array(6), Total_Array(5), Total_Array(4)}, 0)
+            Dim Length_array As Byte() = System.BitConverter.GetBytes(YANM_Length - Length_Diff)
+            Array.Reverse(Length_array, 0, Length_array.Length)
+            Buffer.BlockCopy(Length_array, 0, Total_Array, 4, 4)
+            Dim Head_Length As Integer = BitConverter.ToInt32({Total_Array(3), Total_Array(2), Total_Array(1), Total_Array(0)}, 0)
+            Dim HeadLength_array As Byte() = System.BitConverter.GetBytes(Head_Length - &H28)
+            Array.Reverse(HeadLength_array, 0, HeadLength_array.Length)
+            Buffer.BlockCopy(HeadLength_array, 0, Total_Array, 0, 4)
+            For i As Integer = Temp_Index + 1 To 20
+                If Individual_Parts(i).Start_offset <> 0 Then
+                    Individual_Parts(i).Start_offset = Individual_Parts(i).Start_offset - Length_Diff
+                    Dim Offset_Array As Byte() = System.BitConverter.GetBytes(Individual_Parts(i).Start_offset - header.Length)
+                    Array.Reverse(Offset_Array, 0, Offset_Array.Length)
+                    Buffer.BlockCopy(Offset_Array, 0, Total_Array, &H70 + i * &H28 + &H24, 4)
+                End If
+            Next
+            Dim Final_Array As Byte()
+            Final_Array = New Byte(Total_Array.Length - Length_Diff - 1 - &H28 + &H1000) {}
+            'Header Before the Removed Part
+            Buffer.BlockCopy(Total_Array, 0, Final_Array, 0, &H70 + &H28 * Temp_Index)
+            'Header After the Removed Part
+            Buffer.BlockCopy(Total_Array, &H70 + &H28 * (Temp_Index + 1), Final_Array, &H70 + &H28 * Temp_Index, Individual_Parts(Temp_Index).Start_offset - (&H70 + &H28 * (Temp_Index + 1)))
+            'Parts After the Removed Part
+            If Individual_Parts(Temp_Index + 1).Start_offset <> 0 Then
+                Buffer.BlockCopy(Total_Array,
+                                     Individual_Parts(Temp_Index + 1).Start_offset + Length_Diff,
+                                     Final_Array,
+                                     Individual_Parts(Temp_Index + 1).Start_offset - &H28,
+                                     Total_Array.Length - (Individual_Parts(Temp_Index + 1).Start_offset + Length_Diff))
+            End If
+            File.WriteAllBytes(active_file, Final_Array)
+            ResetForm(True)
+            ReadCamera(active_file)
+            MessageBox.Show("File Saved")
+        Else
+            MessageBox.Show("No Part Selected")
+        End If
+    End Sub
+
+    Private Sub List_Parts_SelectedIndexChanged(sender As Object, e As EventArgs) Handles List_Parts.SelectedIndexChanged
+        Text_Name.Text = List_Parts.SelectedItem
+    End Sub
+
+    Private Sub Text_Name_TextChanged(sender As Object, e As EventArgs) Handles Text_Name.TextChanged
+        Dim theText As String = Text_Name.Text
+        Dim Letter As String
+        Dim SelectionIndex As Integer = Text_Name.SelectionStart
+        Dim Change As Integer
+
+        For x As Integer = 0 To Text_Name.Text.Length - 1
+            Letter = Text_Name.Text.Substring(x, 1)
+            If NumCharacters.Contains(Letter) = False Then
+                theText = theText.Replace(Letter, String.Empty)
+                Change = 1
+            End If
+        Next
+
+        Text_Name.Text = theText
+        If SelectionIndex <> Nothing Then
+            Text_Name.Select(SelectionIndex - Change, 0)
+        End If
+    End Sub
+
+    Private Sub But_Ren_Click(sender As Object, e As EventArgs) Handles But_Ren.Click
+        If List_Parts.SelectedIndex <> -1 Then
+            Dim New_Name As String = Text_Name.Text.PadLeft(8, "0")
+            File.Copy(active_file, active_file & ".bak", True)
+            Dim Total_Array As Byte() = File.ReadAllBytes(active_file)
+            Dim Name_array As Byte() = Encoding.ASCII.GetBytes(New_Name)
+            Buffer.BlockCopy(Name_array, 0, Total_Array, &H74 + &H28 * List_Parts.SelectedIndex, 8)
+            File.WriteAllBytes(active_file, Total_Array)
+            ResetForm(True)
+            ReadCamera(active_file)
+            MessageBox.Show("File Saved")
+        Else
+            MessageBox.Show("No Part Selected")
         End If
     End Sub
 End Class

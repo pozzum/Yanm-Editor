@@ -9,3 +9,14 @@ C:\Users\Pozzum\documents\visual studio 2015\Projects\Animation Editor\Animation
 C:\Users\Pozzum\documents\visual studio 2015\Projects\Animation Editor\Animation Editor\obj\Release\Animation Editor.exe
 C:\Users\Pozzum\documents\visual studio 2015\Projects\Animation Editor\Animation Editor\obj\Release\Animation Editor.xml
 C:\Users\Pozzum\documents\visual studio 2015\Projects\Animation Editor\Animation Editor\obj\Release\Animation Editor.pdb
+C:\Users\Pozzum\Source\Repos\Yanm-Editor\Animation Editor\bin\Release\Animation Editor.exe.config
+C:\Users\Pozzum\Source\Repos\Yanm-Editor\Animation Editor\obj\Release\Animation Editor.exe
+C:\Users\Pozzum\Source\Repos\Yanm-Editor\Animation Editor\obj\Release\Animation Editor.xml
+C:\Users\Pozzum\Source\Repos\Yanm-Editor\Animation Editor\obj\Release\Animation Editor.pdb
+C:\Users\Pozzum\Source\Repos\Yanm-Editor\Animation Editor\bin\Release\Animation Editor.exe
+C:\Users\Pozzum\Source\Repos\Yanm-Editor\Animation Editor\bin\Release\Animation Editor.pdb
+C:\Users\Pozzum\Source\Repos\Yanm-Editor\Animation Editor\bin\Release\Animation Editor.xml
+C:\Users\Pozzum\Source\Repos\Yanm-Editor\Animation Editor\obj\Release\Animation Editor.vbprojResolveAssemblyReference.cache
+C:\Users\Pozzum\Source\Repos\Yanm-Editor\Animation Editor\obj\Release\Animation_Editor.Main.resources
+C:\Users\Pozzum\Source\Repos\Yanm-Editor\Animation Editor\obj\Release\Animation_Editor.Resources.resources
+C:\Users\Pozzum\Source\Repos\Yanm-Editor\Animation Editor\obj\Release\Animation Editor.vbproj.GenerateResource.Cache
