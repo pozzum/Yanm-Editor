@@ -254,7 +254,7 @@ Public Class Main
         End If
     End Sub
 
-    Private Sub But_Ren_Click(sender As Object, e As EventArgs) Handles But_Ren.Click
+    Private Sub But_Rename_Click(sender As Object, e As EventArgs) Handles But_Rename.Click
         If List_Parts.SelectedIndex <> -1 Then
             Dim New_Name As String = Text_Name.Text.PadLeft(8, "0")
             File.Copy(active_file, active_file & ".bak", True)
@@ -267,6 +267,47 @@ Public Class Main
             MessageBox.Show("File Saved")
         Else
             MessageBox.Show("No Part Selected")
+        End If
+    End Sub
+
+    Private Sub But_Add_Click(sender As Object, e As EventArgs) Handles But_Add.Click
+        Dim Temp_Yanm As String
+        If OpenYanmDialog.ShowDialog = System.Windows.Forms.DialogResult.OK Then
+            Temp_Yanm = OpenYanmDialog.FileName
+            File.Copy(active_file, active_file & ".bak", True)
+            Dim Total_Array As Byte() = File.ReadAllBytes(active_file)
+            Dim Yanm_Array As Byte() = File.ReadAllBytes(Temp_Yanm)
+            Dim Length_Diff As Integer = Yanm_Array.Length
+            'Changing Header Length
+            Dim New_Head_Length As Integer = BitConverter.ToInt32({Total_Array(3), Total_Array(2), Total_Array(1), Total_Array(0)}, 0)
+            Dim New_Head_Array As Byte() = System.BitConverter.GetBytes(New_Head_Length + &H28)
+            Array.Reverse(New_Head_Array, 0, New_Head_Array.Length)
+            Buffer.BlockCopy(New_Head_Array, 0, Total_Array, 0, 4)
+            'Changing Yanm Length
+            Dim YANM_Length As Integer = BitConverter.ToInt32({Total_Array(7), Total_Array(6), Total_Array(5), Total_Array(4)}, 0)
+            Dim Length_array As Byte() = System.BitConverter.GetBytes(YANM_Length + Length_Diff)
+            Array.Reverse(Length_array, 0, Length_array.Length)
+            Buffer.BlockCopy(Length_array, 0, Total_Array, 4, 4)
+            Dim Final_Array As Byte()
+            Final_Array = New Byte(Total_Array.Length + Length_Diff - 1 + &H28) {}
+            Dim Header_Part As Byte() = New Byte(&H28) {}
+            Dim Name_Array As Byte() = {&HFF, &H0, &H0, &H74, &H30, &H30, &H30, &H30, &H30, &H30, &H30, &H30}
+            Buffer.BlockCopy(Name_Array, 0, Header_Part, 0, Name_Array.Length)
+            Dim Org_Length As Byte() = System.BitConverter.GetBytes(YANM_Length)
+            Array.Reverse(Org_Length, 0, Org_Length.Length)
+            Buffer.BlockCopy(Org_Length, 0, Header_Part, &H24, &H4)
+            'getting the existing header
+            Buffer.BlockCopy(Total_Array, 0, Final_Array, 0, header.Length)
+            'adding the new header part
+            Buffer.BlockCopy(Header_Part, 0, Final_Array, header.Length, Header_Part.Length)
+            'getting the existing yanm
+            Buffer.BlockCopy(Total_Array, header.Length, Final_Array, header.Length + &H28, YANM_Length)
+            'adding the new yanm
+            Buffer.BlockCopy(Yanm_Array, 0, Final_Array, header.Length + &H28 + YANM_Length, Yanm_Array.Length - 1)
+            File.WriteAllBytes(active_file, Final_Array)
+            MessageBox.Show("File Saved")
+            ResetForm(True)
+            ReadCamera(active_file)
         End If
     End Sub
 End Class

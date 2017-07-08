@@ -33,7 +33,7 @@ Partial Class Main
         Me.FolderBrowserDialog1 = New System.Windows.Forms.FolderBrowserDialog()
         Me.But_Add = New System.Windows.Forms.Button()
         Me.But_Rem = New System.Windows.Forms.Button()
-        Me.But_Ren = New System.Windows.Forms.Button()
+        Me.But_Rename = New System.Windows.Forms.Button()
         Me.Text_Name = New System.Windows.Forms.TextBox()
         Me.SuspendLayout()
         '
@@ -105,7 +105,6 @@ Partial Class Main
         Me.But_Add.TabIndex = 5
         Me.But_Add.Text = "Add"
         Me.But_Add.UseVisualStyleBackColor = True
-        Me.But_Add.Visible = False
         '
         'But_Rem
         '
@@ -116,14 +115,14 @@ Partial Class Main
         Me.But_Rem.Text = "Remove"
         Me.But_Rem.UseVisualStyleBackColor = True
         '
-        'But_Ren
+        'But_Rename
         '
-        Me.But_Ren.Location = New System.Drawing.Point(154, 43)
-        Me.But_Ren.Name = "But_Ren"
-        Me.But_Ren.Size = New System.Drawing.Size(64, 23)
-        Me.But_Ren.TabIndex = 7
-        Me.But_Ren.Text = "Rename"
-        Me.But_Ren.UseVisualStyleBackColor = True
+        Me.But_Rename.Location = New System.Drawing.Point(154, 43)
+        Me.But_Rename.Name = "But_Rename"
+        Me.But_Rename.Size = New System.Drawing.Size(64, 23)
+        Me.But_Rename.TabIndex = 7
+        Me.But_Rename.Text = "Rename"
+        Me.But_Rename.UseVisualStyleBackColor = True
         '
         'Text_Name
         '
@@ -139,7 +138,7 @@ Partial Class Main
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(294, 271)
         Me.Controls.Add(Me.Text_Name)
-        Me.Controls.Add(Me.But_Ren)
+        Me.Controls.Add(Me.But_Rename)
         Me.Controls.Add(Me.But_Rem)
         Me.Controls.Add(Me.But_Add)
         Me.Controls.Add(Me.But_ExtAll)
@@ -169,6 +168,6 @@ Partial Class Main
     Friend WithEvents FolderBrowserDialog1 As FolderBrowserDialog
     Friend WithEvents But_Add As Button
     Friend WithEvents But_Rem As Button
-    Friend WithEvents But_Ren As Button
+    Friend WithEvents But_Rename As Button
     Friend WithEvents Text_Name As TextBox
 End Class
